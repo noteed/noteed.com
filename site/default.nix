@@ -4,12 +4,12 @@
 let
   pkgs = import nixpkgs {};
 
-  design-system-version = "4d55e94cf514d7e6bd65d6aae537c1d0a798894c";
+  design-system-version = "da8585ecaa62c00d5e32b490581ef41ee09d79d5";
   design-system = pkgs.fetchFromGitHub {
     owner = "hypered";
     repo = "design-system";
     rev = design-system-version;
-    sha256 = "124szwc5mj12pbn8vc9z073bhwhyjgji2xc86jdafpi24d1dsqr4";
+    sha256 = "1za6hf9ba7wvd0d2y4g0zn7vnvkfqmhpgq5sipc7yj7cxq24b941";
   };
   inherit (import design-system {}) template lua-filter replace-md-links static;
 
