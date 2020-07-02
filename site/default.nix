@@ -52,10 +52,7 @@ in rec
 
   # nix-build site/ -A html.index
   html.index = to-html md.index;
-  html.blog.index                   = to-html md.blog.index;
-  html.blog.expose-local-server     = to-html md.blog.expose-local-server;
-  html.blog.starting-with-nixops-1  = to-html md.blog.starting-with-nixops-1;
-  html.blog.starting-with-nixops-2  = to-html md.blog.starting-with-nixops-2;
+  html.blog = builtins.mapAttrs (_: v: to-html v) md.blog;
   html.not-os = builtins.mapAttrs (_: v: to-html v) md.not-os;
   html.notes = builtins.mapAttrs (_: v: to-html v) md.notes;
 
