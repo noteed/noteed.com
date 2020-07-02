@@ -3,6 +3,7 @@
 
 let
   pkgs = import nixpkgs {};
+  lib = pkgs.lib;
 
   design-system-version = "da8585ecaa62c00d5e32b490581ef41ee09d79d5";
   design-system = pkgs.fetchFromGitHub {
@@ -27,15 +28,29 @@ let
       ${src}
   '';
 
+  dirsToMds = dir:
+    lib.mapAttrs'
+      (n: v: if v == "regular" || v == "symlink"
+             then lib.nameValuePair (lib.removeSuffix ".md" n) (dir + "/${n}")
+             else lib.nameValuePair n (dirsToMds (dir + "/${n}")))
+      (lib.filterAttrs
+        (name: _: lib.hasSuffix ".md" name)
+        (builtins.readDir dir));
+
 in rec
 {
+  # nix-instanciate --eval --strict site/ -A md.index
   md.index = ../index.md;
+  # TODO: Remove README.md and this shoule be ok.
+  # md.blog = (dirsToMds (toString ../../blog));
   md.blog.index                   = ../../blog/index.md;
   md.blog.expose-local-server     = ../../blog/expose-local-server.md;
   md.blog.starting-with-nixops-1  = ../../blog/starting-with-nixops-1.md;
   md.blog.starting-with-nixops-2  = ../../blog/starting-with-nixops-2.md;
   md.not-os = (import ../../not-os/site {}).md;
+  md.notes = (dirsToMds ../notes);
 
+  # nix-build site/ -A html.index
   html.index = to-html md.index;
   html.blog.index                   = to-html md.blog.index;
   html.blog.expose-local-server     = to-html md.blog.expose-local-server;
@@ -52,10 +67,12 @@ in rec
   html.not-os.dist = to-html md.not-os.dist;
   html.not-os.extra-utils = to-html md.not-os.extra-utils;
   html.not-os.path = to-html md.not-os.path;
+  html.notes = builtins.mapAttrs (_: v: to-html v) md.notes;
 
   html.all = pkgs.runCommand "all" {} ''
     mkdir -p $out/blog
     mkdir -p $out/not-os
+    mkdir -p $out/notes
     cp ${html.index} $out/index.html
     cp ${html.blog.index} $out/blog/index.html
     cp ${html.blog.expose-local-server} $out/blog/expose-local-server.html
@@ -72,6 +89,7 @@ in rec
     cp ${html.not-os.dist} $out/not-os/dist.html
     cp ${html.not-os.extra-utils} $out/not-os/extra-utils.html
     cp ${html.not-os.path} $out/not-os/path.html
+    cp ${html.notes.psu} $out/notes/psu.html
     ${pkgs.bash}/bin/bash ${replace-md-links} $out
   '';
 

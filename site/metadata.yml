@@ -4,6 +4,8 @@ nav:
   href: "/"
 - name: blog
   href: "/blog/"
+- name: notes
+  href: "/notes/psu.html"
 - name: nix-notes
   href: "/nix-notes/"
 - name: not-os
