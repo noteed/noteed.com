@@ -15,7 +15,7 @@ See [Wikipedia].
 Turning on a power supply is done by a signal from the motherboard through its
 power plug. Indeed, testing a PSU when it is not connected to anything can be
 done by shorting two appropriate pins. In the packaging of my Seasonic Focus
-PX-850, there is a "power supply tester" that can be fitted to 24-pin
+PX-850, there is a "power supply tester" that can be fitted to the 24-pin
 motherboard connector, shorting the two appropriate pins.
 
 (I bought the above Seasonic PSU in june 2020 to build a [little workstation].)
