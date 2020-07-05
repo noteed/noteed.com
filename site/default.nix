@@ -14,19 +14,32 @@ let
   };
   inherit (import design-system {}) template lua-filter replace-md-links static;
 
-  to-html = src: pkgs.runCommand "html" {} ''
+  to-metadata = src: pkgs.runCommand "yml" { buildInputs = [ pkgs.git ]; } ''
+    export GIT_DIR=${builtins.path { path = ../.git; name = "git"; } }
+    ${../scripts/git-file-to-metadata.sh} \
+      "${lib.removePrefix (toString ../. + "/") (toString src)}" > $out
+    cat ${./metadata.yml} >> $out
+  '';
+
+  to-html-with-metadata = src: metadata:
+    pkgs.runCommand "html" {} ''
     ${pkgs.pandoc}/bin/pandoc \
       --from markdown \
       --to html \
       --standalone \
-      --template ${template} \
+      --template ${../template.html} \
       -M prefix="" \
       -M font="ibm-plex" \
       --lua-filter ${lua-filter} \
       --output $out \
-      ${./metadata.yml} \
+      ${metadata} \
       ${src}
   '';
+
+  to-html = src: to-html-with-metadata src ./metadata.yml;
+
+  to-html-with-git-metadata = src:
+    let metadata = to-metadata src; in to-html-with-metadata src metadata;
 
   dirsToMds = dir:
     lib.mapAttrs'
@@ -54,7 +67,7 @@ in rec
   html.index = to-html md.index;
   html.blog = builtins.mapAttrs (_: v: to-html v) md.blog;
   html.not-os = builtins.mapAttrs (_: v: to-html v) md.not-os;
-  html.notes = builtins.mapAttrs (_: v: to-html v) md.notes;
+  html.notes = builtins.mapAttrs (_: v: to-html-with-git-metadata v) md.notes;
 
   html.all = pkgs.runCommand "all" {} ''
     mkdir -p $out/blog
