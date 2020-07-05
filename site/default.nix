@@ -88,6 +88,7 @@ in rec
     cp ${html.not-os.digital-ocean} $out/not-os/digital-ocean.html
     cp ${html.notes.psu} $out/notes/psu.html
     cp ${html.notes.mini} $out/notes/mini.html
+    cp ${html.notes.til} $out/notes/til.html
     ${pkgs.bash}/bin/bash ${replace-md-links} $out
   '';
 
