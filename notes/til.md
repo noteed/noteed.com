@@ -1,7 +1,15 @@
 ---
 title: TIL
-date: 2020-07-04
+date: 2020-07-08
 ---
+
+# 2020-07-08
+
+- I have created an account at Packet, and have launched a small NixOS
+  instance, just to have a look (and promptly deleted it; bare metal is quite
+  expensive). I'd like to run an on-demand bare metal machine to run CI jobs
+  that require VMs (e.g. some Nix build when building VM images), possibly
+  driven by a GitHub Actions workflow (Packet-related actions do exist).
 
 # 2020-07-04
 
