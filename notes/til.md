@@ -11,6 +11,10 @@ date: 2020-07-08
   that require VMs (e.g. some Nix build when building VM images), possibly
   driven by a GitHub Actions workflow (Packet-related actions do exist).
 
+  I've played a bit with their nice command-line tool, recreating and deleting
+  another "device". Their `device get` subcommand should state the "plan" (e.g
+  c1.small.x86).
+
 # 2020-07-04
 
 - I have written a small `.github/worflows` file. It uses my `design-system`
