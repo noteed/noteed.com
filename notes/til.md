@@ -5,6 +5,9 @@ date: 2020-07-08
 
 # 2020-07-18
 
+- You can navigate to `/new` on GitHub to create a new repository. This is
+  nice.
+
 Bunch of links:
 
 - I stumbled upon a very interesting ["issue"
