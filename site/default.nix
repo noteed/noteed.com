@@ -27,7 +27,7 @@ let
       --from markdown \
       --to html \
       --standalone \
-      --template ${../template.html} \
+      --template ${template} \
       -M prefix="" \
       -M font="ibm-plex" \
       --lua-filter ${lua-filter} \
