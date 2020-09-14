@@ -4,6 +4,13 @@
 let
   pkgs = import nixpkgs {};
   lib = pkgs.lib;
+  blog-version = "a5d83a246fc015a0230d8d8762ab1745c39399f9";
+  blog = pkgs.fetchFromGitHub {
+    owner = "noteed";
+    repo = "blog";
+    rev = blog-version;
+    sha256 = "1xsdmqskv2l5pzka2prc6s9hknngnzz873b20s7ydzmd18s15n13";
+  };
 
   design-system-version = "da8585ecaa62c00d5e32b490581ef41ee09d79d5";
   design-system = pkgs.fetchFromGitHub {
@@ -56,10 +63,10 @@ in rec
   md.index = ../index.md;
   # TODO: Remove README.md and this shoule be ok.
   # md.blog = (dirsToMds (toString ../../blog));
-  md.blog.index                   = ../../blog/index.md;
-  md.blog.expose-local-server     = ../../blog/expose-local-server.md;
-  md.blog.starting-with-nixops-1  = ../../blog/starting-with-nixops-1.md;
-  md.blog.starting-with-nixops-2  = ../../blog/starting-with-nixops-2.md;
+  md.blog.index                   = (import blog).index;
+  md.blog.expose-local-server     = (import blog).expose-local-server;
+  md.blog.starting-with-nixops-1  = (import blog).starting-with-nixops-1;
+  md.blog.starting-with-nixops-2  = (import blog).starting-with-nixops-2;
   md.not-os = (import ../../not-os/site {}).md;
   md.notes = (dirsToMds ../notes);
 
