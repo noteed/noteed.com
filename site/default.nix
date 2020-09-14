@@ -12,6 +12,14 @@ let
     sha256 = "1xsdmqskv2l5pzka2prc6s9hknngnzz873b20s7ydzmd18s15n13";
   };
 
+  not-os-version = "fb1c1644131f7df039d40d12849c49429358ef9f";
+  not-os = pkgs.fetchFromGitHub {
+    owner = "noteed";
+    repo = "not-os";
+    rev = not-os-version;
+    sha256 = "0wciskk7w15vagqvysxkqa6fw1ny122lgl9nwrgfn4c0liri6q3g";
+  };
+
   design-system-version = "da8585ecaa62c00d5e32b490581ef41ee09d79d5";
   design-system = pkgs.fetchFromGitHub {
     owner = "hypered";
@@ -67,7 +75,7 @@ in rec
   md.blog.expose-local-server     = (import blog).expose-local-server;
   md.blog.starting-with-nixops-1  = (import blog).starting-with-nixops-1;
   md.blog.starting-with-nixops-2  = (import blog).starting-with-nixops-2;
-  md.not-os = (import ../../not-os/site {}).md;
+  md.not-os = ((import not-os {}).site {}).md;
   md.notes = (dirsToMds ../notes);
 
   # nix-build site/ -A html.index
