@@ -12,12 +12,12 @@ let
     sha256 = "1xsdmqskv2l5pzka2prc6s9hknngnzz873b20s7ydzmd18s15n13";
   };
 
-  not-os-version = "fb1c1644131f7df039d40d12849c49429358ef9f";
+  not-os-version = "6ea8695956c75ec0a45ca64e38811dffb2bf518c";
   not-os = pkgs.fetchFromGitHub {
-    owner = "noteed";
-    repo = "not-os";
-    rev = not-os-version;
-    sha256 = "0wciskk7w15vagqvysxkqa6fw1ny122lgl9nwrgfn4c0liri6q3g";
+   owner = "noteed";
+   repo = "not-os";
+   rev = not-os-version;
+   sha256 = "0n49i35x2jcirqi2w7qk5hbwi9z98xh3dnx3jr3gwzkw6lf1jq9g";
   };
 
   design-system-version = "da8585ecaa62c00d5e32b490581ef41ee09d79d5";
