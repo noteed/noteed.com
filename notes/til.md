@@ -3,6 +3,88 @@ title: TIL
 date: 2020-07-08
 ---
 
+# 2020-10-31
+
+- So I'm reading the installation instructions of Doom Emacs. Which means I
+  have added emacs, ripgrep, and fd in my `configuration.nix`. I guess I'll
+  quickly burn `rg` and `fd` in my fingers.
+
+  I have followed the clone/install instructions, and answered yes to create
+  the envvars file. Then it clones/builds a lot of stuff for a while...
+  Then it asks you want to download icon fonts (yes).
+
+
+# 2020-10-10
+
+- I have installed Steam on my T480:
+  https://gist.github.com/noteed/10c06677d686306e23a3259a3223294e.
+- I have run the last line in
+  https://github.com/svanderburg/nix-androidenvtests/tree/master/tests and
+  ended up with an installable `.apk`.
+
+I have changed the following to use a more recent API level:
+
+```
+buildPlatformVersions ? [ "28" ]
+emulatePlatformVersions ? [ "28" ]
+```
+
+and
+
+```
+android:minSdkVersion="28"
+android:targetSdkVersion="28"
+```
+
+
+# 2020-10-08
+
+I have produced this Gist:
+https://gist.github.com/noteed/db47709fe4869139a4a6453c2c9064d8 which shows how
+to use CadQuery to produce an HTML page with an interactive 3D model. This uses
+sphinx, and sphinxcadquery which seems simple enough to understand and turn
+into a standalone HTML page builder.
+
+
+# 2020-10-07
+
+I have installed Syncthing on both my old NUC and my T480. On the NUC it is
+installed through a (quite old) Nix, while my T480 runs NixOS and is
+up-to-date. Syncing between the two worked like a charm.
+
+
+# 2020-10-01
+
+Bunch of links:
+
+- Glamorous toolkit: https://gtoolkit.com/
+- Eve: http://witheve.com/
+- Drakon: http://drakon-editor.sourceforge.net/
+- P programming language: https://github.com/p-org/P
+
+
+# 2020-09-29
+
+- I've read a bit about Soufflé, in particular its simple example, and the
+  tutorial: https://souffle-lang.github.io/tutorial.
+
+
+# 2020-09-28
+
+- I've read a bit about Mercury and Picat.
+- A few days ago, I read again about Shake (the build system).
+- I completed Inspired, by Marty Cagan.
+
+
+# 2020-08-08
+
+- I have continued to learn about GitHub Actions. I forked the
+  `backblaze-b2-sync` action to update it, and used it to upload the result of my
+  noteed/actions build to B2. (Actually it's easier to directly use the `b2`
+  command-line tool so it can read Nix `./result` symlink.
+- I have setup an account to Backblaze.
+
+
 # 2020-07-18
 
 - You can navigate to `/new` on GitHub to create a new repository. This is
@@ -47,4 +129,4 @@ Bunch of links:
 - I have started to play with Datasette. I have written a small script to
   export some Git commits into a SQLite database, and created a custom
   Datasette Docker image to support HTML links (using the `datasette-json-html`
-  plugin). 
+  plugin).
