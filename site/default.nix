@@ -113,7 +113,13 @@ in rec
     cp ${html.not-os.root-modules} $out/not-os/root-modules.html
     cp ${html.not-os.todo} $out/not-os/todo.html
     cp ${html.not-os.digital-ocean} $out/not-os/digital-ocean.html
+
+    cp ${html.notes.index} $out/notes/index.html
+    cp ${html.notes.learn-bash} $out/notes/learn-bash.html
+    cp ${html.notes.learn-packaging} $out/notes/learn-packaging.html
     cp ${html.notes.psu} $out/notes/psu.html
+    cp ${html.notes.sha-bang} $out/notes/sha-bang.html
+    cp ${html.notes.static-binaries} $out/notes/static-binaries.html
     cp ${html.notes.mini} $out/notes/mini.html
     cp ${html.notes.til} $out/notes/til.html
 
