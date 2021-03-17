@@ -14,7 +14,7 @@ Dockerfile. The result is easier to manipulate though (e.g. share packages on a
 static web server, package managers are made to list available updates, apply
 them, show package details, ...).
 
-If you're a Docker user, you may need need to provision your host machine with
+If you're a Docker user, you may need to provision your host machine with
 docker-engine, but also with your own configuration files and scripts. Packages
 can also create the right directories and permissions before hand.
 
