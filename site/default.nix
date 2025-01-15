@@ -1,8 +1,6 @@
-{ nixpkgs ? <nixpkgs>
-}:
-
 let
-  pkgs = import nixpkgs {};
+  sources = import ../nix/sources.nix;
+  pkgs = import sources.nixpkgs {};
   lib = pkgs.lib;
 
   #blog-version = "a5d83a246fc015a0230d8d8762ab1745c39399f9";
