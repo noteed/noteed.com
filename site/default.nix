@@ -4,20 +4,22 @@
 let
   pkgs = import nixpkgs {};
   lib = pkgs.lib;
-  blog-version = "a5d83a246fc015a0230d8d8762ab1745c39399f9";
-  blog = pkgs.fetchFromGitHub {
-    owner = "noteed";
-    repo = "blog";
-    rev = blog-version;
-    sha256 = "1xsdmqskv2l5pzka2prc6s9hknngnzz873b20s7ydzmd18s15n13";
-  };
 
-  not-os-version = "6ea8695956c75ec0a45ca64e38811dffb2bf518c";
+  #blog-version = "a5d83a246fc015a0230d8d8762ab1745c39399f9";
+  #blog = pkgs.fetchFromGitHub {
+  #  owner = "noteed";
+  #  repo = "blog";
+  #  rev = blog-version;
+  #  sha256 = "1xsdmqskv2l5pzka2prc6s9hknngnzz873b20s7ydzmd18s15n13";
+  #};
+  blog = ../../blog;
+
+  not-os-version = "bc782f7ac8a094479af9c1a7c11dc91b47b36df2";
   not-os = pkgs.fetchFromGitHub {
    owner = "noteed";
    repo = "not-os";
    rev = not-os-version;
-   sha256 = "0n49i35x2jcirqi2w7qk5hbwi9z98xh3dnx3jr3gwzkw6lf1jq9g";
+   hash = "sha256-KnYj7P3KyzdlewC+kE+t1zXSDIz6TJ9cpGZJ4mm4L24=";
   };
 
   videos = ../../videos;
@@ -25,7 +27,7 @@ let
   design-system-version = "51694bea56d2e5c9545d88b35f11ccffbc536742";
   design-system = pkgs.fetchFromGitHub {
     owner = "hypered";
-    repo = "design-system";
+    repo = "design";
     rev = design-system-version;
     sha256 = "0wxvwwhj2xwhflnv02jffim4h6jgwziybv82z2mifmjczbvxhizn";
   };
@@ -67,6 +69,7 @@ in rec
   md.blog.expose-local-server     = (import blog).expose-local-server;
   md.blog.starting-with-nixops-1  = (import blog).starting-with-nixops-1;
   md.blog.starting-with-nixops-2  = (import blog).starting-with-nixops-2;
+  md.blog.nixos-ocean-sprint      = (import blog).nixos-ocean-sprint;
   md.not-os = ((import not-os {}).site {}).md;
   md.notes = (dirsToMds ../notes);
   md.videos = ((import videos).site {}).md;
@@ -91,6 +94,7 @@ in rec
     cp ${html.blog.expose-local-server} $out/blog/expose-local-server.html
     cp ${html.blog.starting-with-nixops-1} $out/blog/starting-with-nixops-1.html
     cp ${html.blog.starting-with-nixops-2} $out/blog/starting-with-nixops-2.html
+    cp ${html.blog.nixos-ocean-sprint} $out/blog/nixos-ocean-sprint.html
 
     cp ${html.not-os.index} $out/not-os/index.html
     cp ${html.not-os.runvm} $out/not-os/runvm.html
@@ -115,6 +119,7 @@ in rec
     cp ${html.not-os.digital-ocean} $out/not-os/digital-ocean.html
 
     cp ${html.notes.index} $out/notes/index.html
+    cp ${html.notes.git} $out/notes/git.html
     cp ${html.notes.learn-bash} $out/notes/learn-bash.html
     cp ${html.notes.learn-packaging} $out/notes/learn-packaging.html
     cp ${html.notes.psu} $out/notes/psu.html
@@ -127,6 +132,13 @@ in rec
     sed "s@url('../../images/fonts/@url('/static/fonts/@" ${svg.videos.title-01} > $out/videos/01/title.svg
 
     ${pkgs.bash}/bin/bash ${replace-md-links} $out
+  '';
+
+  # all + static, to serve locally with serve.sh
+  html.all-with-static = pkgs.runCommand "all-with-static" {} ''
+    mkdir $out
+    cp -r ${html.all}/* $out/
+    ln -s ${static} $out/static
   '';
 
   inherit static;
