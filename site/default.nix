@@ -3,33 +3,13 @@ let
   pkgs = import sources.nixpkgs {};
   lib = pkgs.lib;
 
-  #blog-version = "a5d83a246fc015a0230d8d8762ab1745c39399f9";
-  #blog = pkgs.fetchFromGitHub {
-  #  owner = "noteed";
-  #  repo = "blog";
-  #  rev = blog-version;
-  #  sha256 = "1xsdmqskv2l5pzka2prc6s9hknngnzz873b20s7ydzmd18s15n13";
-  #};
-  blog = ../../blog;
+  blog = sources.blog;
 
-  not-os-version = "bc782f7ac8a094479af9c1a7c11dc91b47b36df2";
-  not-os = pkgs.fetchFromGitHub {
-   owner = "noteed";
-   repo = "not-os";
-   rev = not-os-version;
-   hash = "sha256-KnYj7P3KyzdlewC+kE+t1zXSDIz6TJ9cpGZJ4mm4L24=";
-  };
+  not-os = sources.not-os;
 
-  videos = ../../videos;
+  videos = sources.videos;
 
-  design-system-version = "51694bea56d2e5c9545d88b35f11ccffbc536742";
-  design-system = pkgs.fetchFromGitHub {
-    owner = "hypered";
-    repo = "design";
-    rev = design-system-version;
-    sha256 = "0wxvwwhj2xwhflnv02jffim4h6jgwziybv82z2mifmjczbvxhizn";
-  };
-  inherit (import design-system {}) template lua-filter replace-md-links static;
+  inherit (import sources.hypered-design) template lua-filter replace-md-links static;
 
   to-html-with-metadata = src: metadata:
     pkgs.runCommand "html" {} ''
@@ -70,8 +50,8 @@ in rec
   md.blog.nixos-ocean-sprint      = (import blog).nixos-ocean-sprint;
   md.not-os = ((import not-os {}).site {}).md;
   md.notes = (dirsToMds ../notes);
-  md.videos = ((import videos).site {}).md;
-  svg.videos = ((import videos).site {}).svg;
+  md.videos = (import videos).site.md;
+  svg.videos = (import videos).site.svg;
 
   # nix-build site/ -A html.index
   html.index = to-html md.index;
